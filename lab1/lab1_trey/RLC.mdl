@@ -12,7 +12,7 @@ Model {
       UnitExpr		      "inherit"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.3"
+    ComputedModelVersion    "1.4"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -49,7 +49,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [88.0, 22.0, 1402.0, 878.0]
+      Location		      [38.0, 22.0, 1402.0, 878.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -75,7 +75,7 @@ Model {
 	LoadSaveID		"0"
 	Extents			[1364.0, 702.0]
 	ZoomFactor		[2.0]
-	Offset			[245.171875, 72.56144872265925]
+	Offset			[245.171875, 72.561448722659236]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -109,9 +109,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "trey"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 07 13:32:16 2018"
-  RTWModifiedTimeStamp	  439911088
-  ModelVersionFormat	  "1.%<AutoIncrement:3>"
+  LastModifiedDate	  "Sat Feb 10 14:52:45 2018"
+  RTWModifiedTimeStamp	  440171574
+  ModelVersionFormat	  "1.%<AutoIncrement:4>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -164,7 +164,7 @@ Model {
     $ObjectID		    7
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "RLC"
-    overrideMode_	    [0U]
+    overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
       Dimension		      1
@@ -1003,15 +1003,6 @@ Model {
       Floating		      off
     }
     Block {
-      BlockType		      SignalGenerator
-      WaveForm		      "sine"
-      TimeSource	      "Use simulation time"
-      Amplitude		      "1"
-      Frequency		      "1"
-      Units		      "Hertz"
-      VectorParams1D	      on
-    }
-    Block {
       BlockType		      Step
       Time		      "1"
       Before		      "0"
@@ -1039,7 +1030,7 @@ Model {
   }
   System {
     Name		    "RLC"
-    Location		    [88, 22, 1490, 900]
+    Location		    [38, 22, 1440, 900]
     Open		    on
     PortBlocksUseCompactNotation off
     ModelBrowserVisibility  off
@@ -1131,17 +1122,6 @@ Model {
       "156863],'Title','V_c(t)')),extmgr.Configuration('Tools','Plot Navigation',true),extmgr.Configuration('Tools','Me"
       "asurements',true,'Version','2017a')),'Version','2017a','Position',[169 219 863 573])"
       NumInputPorts	      "1"
-    }
-    Block {
-      BlockType		      SignalGenerator
-      Name		      "Signal\nGenerator"
-      SID		      "18"
-      Ports		      [0, 1]
-      Position		      [295, 205, 325, 235]
-      ZOrder		      16
-      Commented		      "on"
-      WaveForm		      "square"
-      Frequency		      "250"
     }
     Block {
       BlockType		      Step
@@ -1273,12 +1253,6 @@ Model {
       DstBlock		      "Sum1"
       DstPort		      2
     }
-    Line {
-      ZOrder		      22
-      SrcBlock		      "Signal\nGenerator"
-      SrcPort		      1
-      Points		      [-5, 0; 25, 0; 0, 0]
-    }
     Annotation {
       SID		      "17"
       Name		      "V_c(s)"
@@ -1288,6 +1262,7 @@ Model {
       FixedWidth	      off
       HorizontalAlignment     "left"
       VerticalAlignment	      "top"
+      ZOrder		      -1
     }
     Annotation {
       SID		      "16"
@@ -1298,6 +1273,7 @@ Model {
       FixedWidth	      off
       HorizontalAlignment     "left"
       VerticalAlignment	      "top"
+      ZOrder		      -2
     }
   }
 }

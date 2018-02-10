@@ -1,7 +1,7 @@
 % Trey Fortmuller
 % Lab 1
 
-% constants or our RLC circuit
+% constants for our RLC circuit
 R = 2;
 L = 1e-3;
 c = 1e-3;
