@@ -23,7 +23,7 @@ den = [s2 s]; % the denominator
 
 plant = tf(num, den);
 
-disp("The plant has pole(s): " + pole(plant));
+pole(plant)
 
 % proportional control gain K in the simulink model
 K = 15;
