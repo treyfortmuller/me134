@@ -16,7 +16,7 @@ J_m = 3.9e-7; % [kgm^2]
 K = 15;
 
 % create the transfer function model of the plant
-num = r * K_t * K_g; % the numerator
+num = [r  K_t K_g]; % the numerator
 
 s2 = J_m * K_g^2 * R_m; % the coefficient on s^2
 s = r^2 * R_m * m_c; % the coefficient on s
@@ -28,8 +28,8 @@ plant = tf(num, den); % the plant dynamics represented as a TF
 disp("The plant has pole(s): " + pole(plant));
 
 % run the simulink model of the proportional controller
-sim('p_control_cart.mdl');
-open('p_control_cart.mdl');
+sim("p_control_cart.mdl");
+open("p_control_cart.mdl");
 
 % plot the output of the simulink simulation
 plot(simout);
