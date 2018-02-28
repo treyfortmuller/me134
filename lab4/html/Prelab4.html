@@ -1,0 +1,475 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Prelab4</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-27"><meta name="DC.source" content="Prelab4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Prelab 4</a></li><li><a href="#2">4.1.1</a></li><li><a href="#3">4.1.2</a></li><li><a href="#6">4.1.3</a></li></ul></div><h2 id="1">Prelab 4</h2><pre class="codeinput">m = 0.94;
+r = 6.36*10^-3;
+Rm = 2.6;
+Kt = 7.67*10^-3;
+Km = 7.67*10^-3;
+Kg = 3.71;
+Jm = 3.9*10^-7;
+
+a = m*r*r*Rm + Kg*Kg*Jm*Rm;
+b = Kg*Kg*Kt*Km;
+c = Kg*Kt*r;
+
+K = 15;
+</pre><h2 id="2">4.1.1</h2><pre class="codeinput">Mos = 8/100;
+tr = 0.16;
+
+e_array = linspace(0,0.9,1000);
+m = @(ep) exp(-pi.*ep./sqrt(1-ep.^2));
+M = m(e_array);
+index = find((Mos-M) &lt; 0.0005);
+e_approx = e_array(index(end))
+
+wn = (1.76*e_approx^3 - 0.417*e_approx^2 + 1.039*e_approx +1)/tr
+</pre><pre class="codeoutput">
+e_approx =
+
+    0.6270
+
+
+wn =
+
+   12.0088
+
+</pre><h2 id="3">4.1.2</h2><pre class="codeinput">k_array = linspace(10,60,6);
+figure;
+i = 1;
+info = 0;
+<span class="keyword">for</span> K = k_array
+    sim(<span class="string">'pl4_p'</span>);
+<span class="comment">%     if i == 1</span>
+<span class="comment">%         plot(simin.Time, simin.Data,'-.');</span>
+<span class="comment">%         i = 0;</span>
+<span class="comment">%     end</span>
+    hold <span class="string">on</span>
+    plot(simout.Time, simout.Data);
+<span class="comment">%     info = stepinfo(simout.Time, simout.Data);</span>
+<span class="comment">%     disp(['Rise Time for K=', num2str(K), ' is:',num2str(info.RiseTime)])</span>
+<span class="comment">%     disp(info.Overshoot)</span>
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data &gt;= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data &gt;= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    disp([<span class="string">'Rise Time for K='</span>, num2str(K), <span class="string">' is:'</span>,num2str(rise_time)])
+    disp([<span class="string">'Percent Overshoot for K='</span>, num2str(K), <span class="string">' is:'</span>, num2str(percent_os), <span class="string">'%'</span>])
+
+<span class="keyword">end</span>
+title(<span class="string">'Proportional Controller Step Response with Varying K'</span>);
+xlabel(<span class="string">'Time (s)'</span>);
+legend(<span class="string">'K = 10'</span>,<span class="string">'K = 20'</span>,<span class="string">'K = 30'</span>, <span class="string">'K = 40'</span>, <span class="string">'K = 50'</span>, <span class="string">'K = 60'</span>);
+close_system(<span class="string">'pl4_p'</span>);
+</pre><pre class="codeoutput">Rise Time for K=10 is:0.72
+Percent Overshoot for K=10 is:0.17509%
+Rise Time for K=20 is:0.32
+Percent Overshoot for K=20 is:7.4673%
+Rise Time for K=30 is:0.24
+Percent Overshoot for K=30 is:14.9507%
+Rise Time for K=40 is:0.16
+Percent Overshoot for K=40 is:20.7101%
+Rise Time for K=50 is:0.16
+Percent Overshoot for K=50 is:24.8198%
+Rise Time for K=60 is:0.077177
+Percent Overshoot for K=60 is:28.9131%
+</pre><img vspace="5" hspace="5" src="Prelab4_01.png" alt=""> <pre class="codeinput">k_array = linspace(30,40,500);
+<span class="keyword">for</span> K = k_array
+    sim(<span class="string">'pl4_p'</span>);
+
+    <span class="comment">%info = stepinfo(simout.Time, simout.Data);</span>
+    <span class="comment">%disp(['Rise Time for K:', num2str(K), ' is:',num2str(info.RiseTime)])</span>
+    <span class="comment">%disp(info.Overshoot)</span>
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data &gt;= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data &gt;= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    <span class="keyword">if</span> rise_time &lt;= tr
+        <span class="comment">%plot(simin.Time, simin.Data,'-.');</span>
+        <span class="comment">%hold on</span>
+        figure;
+        plot(simout.Time, simout.Data);
+        disp([<span class="string">'Meet RT criteria at K = '</span>, num2str(K)])
+        disp([<span class="string">'Rise Time for K='</span>, num2str(K), <span class="string">' is:'</span>,num2str(rise_time)])
+        disp([<span class="string">'Percent Overshoot for K='</span>, num2str(K), <span class="string">' is:'</span>, num2str(percent_os), <span class="string">'%'</span>])
+        title(<span class="string">'Min K for Rise Time Requirement'</span>);
+        xlabel(<span class="string">'Time (s)'</span>);
+        ylabel(<span class="string">'Position (m)'</span>);
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+close_system(<span class="string">'pl4_p'</span>);
+</pre><pre class="codeoutput">Meet RT criteria at K = 34.4289
+Rise Time for K=34.4289 is:0.16
+Percent Overshoot for K=34.4289 is:17.0199%
+</pre><img vspace="5" hspace="5" src="Prelab4_02.png" alt=""> <pre class="codeinput">h_p = tf([c/a],[1 b/a 0]);
+figure;
+rlocus(h_p)
+</pre><img vspace="5" hspace="5" src="Prelab4_03.png" alt=""> <h2 id="6">4.1.3</h2><pre class="codeinput">h_pd = tf([1 12],[1/250 1]);
+figure;
+rlocus(h_pd)
+</pre><img vspace="5" hspace="5" src="Prelab4_04.png" alt=""> <pre class="codeinput">kd_array = linspace(4,5,100);
+<span class="keyword">for</span> kd = kd_array
+    sim(<span class="string">'pl4_pd'</span>);
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data &gt;= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data &gt;= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    <span class="keyword">if</span> rise_time &lt;= tr &amp;&amp; percent_os/100 &lt;= Mos
+        figure;
+        plot(simout.Time, simout.Data);
+        disp([<span class="string">'Rise Time for Kd='</span>, num2str(kd), <span class="string">' is:'</span>,num2str(rise_time)])
+        disp([<span class="string">'Percent Overshoot for Kd='</span>, num2str(kd), <span class="string">' is:'</span>, num2str(percent_os), <span class="string">'%'</span>])
+        title(<span class="string">'Min Kd for Rise Time and Percent OverShoot Requirement'</span>);
+        xlabel(<span class="string">'Time (s)'</span>);
+        ylabel(<span class="string">'Position (m)'</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+close_system(<span class="string">'pl4_pd'</span>);
+</pre><pre class="codeoutput">Rise Time for Kd=4.7071 is:0.15727
+Percent Overshoot for Kd=4.7071 is:5.6628%
+</pre><img vspace="5" hspace="5" src="Prelab4_05.png" alt=""> <pre class="codeinput">kd_array = linspace(4,50,100);
+kd_pass = [];
+figure;
+<span class="keyword">for</span> kd = kd_array
+    sim(<span class="string">'pl4_pd'</span>);
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data &gt;= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data &gt;= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    <span class="keyword">if</span> rise_time &lt;= tr &amp;&amp; percent_os/100 &lt;= Mos
+<span class="comment">%         hold on</span>
+<span class="comment">%         plot(simout.Time, simout.Data);</span>
+<span class="comment">%         disp(['Rise Time for Kd=', num2str(kd), ' is:',num2str(rise_time)])</span>
+<span class="comment">%         disp(['Percent Overshoot for Kd=', num2str(kd), ' is:', num2str(percent_os), '%'])</span>
+        kd_pass = [kd_pass kd];
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+disp([<span class="string">'The range of acceptable kd values are from:'</span>, num2str(kd_pass(1)),<span class="string">' to:'</span>, num2str(kd_pass(end))])
+
+<span class="keyword">for</span> q = 1:4
+    kd = kd_pass(floor(length(kd_pass)/ 4 * q));
+    hold <span class="string">on</span>
+    plot(simout.Time, simout.Data);
+    disp([<span class="string">'Rise Time for Kd='</span>, num2str(kd), <span class="string">' is:'</span>,num2str(rise_time)])
+    disp([<span class="string">'Percent Overshoot for Kd='</span>, num2str(kd), <span class="string">' is:'</span>, num2str(percent_os), <span class="string">'%'</span>])
+<span class="keyword">end</span>
+
+title(<span class="string">'Valid Kd for Rise Time and Percent OverShoot Requirement'</span>);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Position (m)'</span>);
+close_system(<span class="string">'pl4_pd'</span>);
+</pre><pre class="codeoutput">The range of acceptable kd values are from:4.9293 to:50
+Rise Time for Kd=15.6162 is:0.018032
+Percent Overshoot for Kd=15.6162 is:4.8859%
+Rise Time for Kd=27.2323 is:0.018032
+Percent Overshoot for Kd=27.2323 is:4.8859%
+Rise Time for Kd=38.3838 is:0.018032
+Percent Overshoot for Kd=38.3838 is:4.8859%
+Rise Time for Kd=50 is:0.018032
+Percent Overshoot for Kd=50 is:4.8859%
+</pre><img vspace="5" hspace="5" src="Prelab4_06.png" alt=""> <pre class="codeinput">kd_array = linspace(0,10,100);
+<span class="keyword">for</span> kd = kd_array
+    sim(<span class="string">'pl4_pd15'</span>);
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data &gt;= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data &gt;= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    <span class="keyword">if</span> rise_time &lt;= tr &amp;&amp; percent_os/100 &lt;= Mos
+        figure;
+        plot(simout.Time, simout.Data);
+        disp([<span class="string">'Rise Time for Kd='</span>, num2str(kd), <span class="string">' is:'</span>,num2str(rise_time)])
+        disp([<span class="string">'Percent Overshoot for Kd='</span>, num2str(kd), <span class="string">' is:'</span>, num2str(percent_os), <span class="string">'%'</span>])
+        title(<span class="string">'Min Kd for Rise Time and Percent OverShoot Requirement'</span>);
+        xlabel(<span class="string">'Time (s)'</span>);
+        ylabel(<span class="string">'Position (m)'</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+disp(<span class="string">'Cannot fullfill both requirements with a zero at 15'</span>);
+close_system(<span class="string">'pl4_pd15'</span>);
+</pre><pre class="codeoutput">Cannot fullfill both requirements with a zero at 15
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Prelab 4
+m = 0.94;
+r = 6.36*10^-3;
+Rm = 2.6;
+Kt = 7.67*10^-3;
+Km = 7.67*10^-3;
+Kg = 3.71;
+Jm = 3.9*10^-7;
+
+a = m*r*r*Rm + Kg*Kg*Jm*Rm;
+b = Kg*Kg*Kt*Km;
+c = Kg*Kt*r;
+
+K = 15;
+
+%% 4.1.1
+Mos = 8/100;
+tr = 0.16;
+
+e_array = linspace(0,0.9,1000);
+m = @(ep) exp(-pi.*ep./sqrt(1-ep.^2));
+M = m(e_array);
+index = find((Mos-M) < 0.0005);
+e_approx = e_array(index(end))
+
+wn = (1.76*e_approx^3 - 0.417*e_approx^2 + 1.039*e_approx +1)/tr
+
+%% 4.1.2
+
+k_array = linspace(10,60,6);
+figure;
+i = 1;
+info = 0;
+for K = k_array
+    sim('pl4_p');
+%     if i == 1
+%         plot(simin.Time, simin.Data,'-.');
+%         i = 0;
+%     end
+    hold on
+    plot(simout.Time, simout.Data);
+%     info = stepinfo(simout.Time, simout.Data);
+%     disp(['Rise Time for K=', num2str(K), ' is:',num2str(info.RiseTime)])
+%     disp(info.Overshoot)
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data >= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data >= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+    
+    disp(['Rise Time for K=', num2str(K), ' is:',num2str(rise_time)])
+    disp(['Percent Overshoot for K=', num2str(K), ' is:', num2str(percent_os), '%'])
+
+end
+title('Proportional Controller Step Response with Varying K');
+xlabel('Time (s)');
+legend('K = 10','K = 20','K = 30', 'K = 40', 'K = 50', 'K = 60');
+close_system('pl4_p');
+
+%% 
+k_array = linspace(30,40,500);
+for K = k_array
+    sim('pl4_p');
+    
+    %info = stepinfo(simout.Time, simout.Data);
+    %disp(['Rise Time for K:', num2str(K), ' is:',num2str(info.RiseTime)])
+    %disp(info.Overshoot)
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data >= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data >= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+    
+    if rise_time <= tr
+        %plot(simin.Time, simin.Data,'-.');
+        %hold on
+        figure;
+        plot(simout.Time, simout.Data);
+        disp(['Meet RT criteria at K = ', num2str(K)])
+        disp(['Rise Time for K=', num2str(K), ' is:',num2str(rise_time)])
+        disp(['Percent Overshoot for K=', num2str(K), ' is:', num2str(percent_os), '%'])
+        title('Min K for Rise Time Requirement');
+        xlabel('Time (s)');
+        ylabel('Position (m)');
+        break
+    end
+end
+close_system('pl4_p');
+
+%% 
+h_p = tf([c/a],[1 b/a 0]);
+figure;
+rlocus(h_p)
+
+%% 4.1.3
+h_pd = tf([1 12],[1/250 1]);
+figure;
+rlocus(h_pd)
+
+%%
+kd_array = linspace(4,5,100);
+for kd = kd_array
+    sim('pl4_pd');
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data >= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data >= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    if rise_time <= tr && percent_os/100 <= Mos
+        figure;
+        plot(simout.Time, simout.Data);
+        disp(['Rise Time for Kd=', num2str(kd), ' is:',num2str(rise_time)])
+        disp(['Percent Overshoot for Kd=', num2str(kd), ' is:', num2str(percent_os), '%'])
+        title('Min Kd for Rise Time and Percent OverShoot Requirement');
+        xlabel('Time (s)');
+        ylabel('Position (m)');
+        break;
+    end
+end
+close_system('pl4_pd');
+
+%%
+kd_array = linspace(4,50,100);
+kd_pass = [];
+figure;
+for kd = kd_array
+    sim('pl4_pd');
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data >= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data >= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    if rise_time <= tr && percent_os/100 <= Mos
+%         hold on
+%         plot(simout.Time, simout.Data);
+%         disp(['Rise Time for Kd=', num2str(kd), ' is:',num2str(rise_time)])
+%         disp(['Percent Overshoot for Kd=', num2str(kd), ' is:', num2str(percent_os), '%'])
+        kd_pass = [kd_pass kd];
+    end
+end
+
+disp(['The range of acceptable kd values are from:', num2str(kd_pass(1)),' to:', num2str(kd_pass(end))])
+
+for q = 1:4
+    kd = kd_pass(floor(length(kd_pass)/ 4 * q));
+    hold on
+    plot(simout.Time, simout.Data);
+    disp(['Rise Time for Kd=', num2str(kd), ' is:',num2str(rise_time)])
+    disp(['Percent Overshoot for Kd=', num2str(kd), ' is:', num2str(percent_os), '%'])
+end
+
+title('Valid Kd for Rise Time and Percent OverShoot Requirement');
+xlabel('Time (s)');
+ylabel('Position (m)'); 
+close_system('pl4_pd');
+
+%%
+kd_array = linspace(0,10,100);
+for kd = kd_array
+    sim('pl4_pd15');
+    cfinal = simout.Data(end);
+    percent_os = (max(simout.Data) - cfinal)/ cfinal * 100;
+    time1_index = find(simout.Data >= 0.1*cfinal,1);
+    time1 = simout.Time(time1_index);
+    time9_index = find(simout.Data >= 0.9*cfinal,1);
+    time9 = simout.Time(time9_index);
+    rise_time = time9 - time1;
+
+    if rise_time <= tr && percent_os/100 <= Mos
+        figure;
+        plot(simout.Time, simout.Data);
+        disp(['Rise Time for Kd=', num2str(kd), ' is:',num2str(rise_time)])
+        disp(['Percent Overshoot for Kd=', num2str(kd), ' is:', num2str(percent_os), '%'])
+        title('Min Kd for Rise Time and Percent OverShoot Requirement');
+        xlabel('Time (s)');
+        ylabel('Position (m)');
+        break;
+    end
+end
+disp('Cannot fullfill both requirements with a zero at 15');
+close_system('pl4_pd15');
+
+
+##### SOURCE END #####
+--></body></html>
