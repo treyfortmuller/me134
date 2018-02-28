@@ -1,12 +1,15 @@
-%%ME134 - Lab 2
+%% ME134 - Lab 2
 %Jenny Wong, Charlene Shong, Trey Fortmuller
 
-%%4.1.2
+tf1 = tf([0,K,2*K],[1,K-12,2]);
+
+%% 4.1.2
 K_array = 10:13;
 figure;
 for i = 1:length(K_array)
     K = K_array(i);
     sim('part1');
+    disp(pole(tf1));
     subplot(2,2,i);
     plot(simout.Time, simout.Data);
     hold on;
@@ -25,6 +28,7 @@ figure;
 for i = 1:length(K_array)
     K = K_array(i);
     sim('part1');
+    disp(pole(tf1));
     if i == 1
         plot(simin.Time, simin.Data,'.-');
     end
