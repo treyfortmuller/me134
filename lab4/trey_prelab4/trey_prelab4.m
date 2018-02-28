@@ -12,27 +12,33 @@ K_m = 7.67e-3; % [Vs/rad]
 K_g = 3.72; % gear ratio
 J_m = 3.9e-7; % [kgm^2]
 
+% height of the step input
+step_height = 0.15;
+
 % proportional controller gain K
-K = 15;
+K_array = [10, 20, 30, 40];
 
-% create the transfer function model of the plant
-num = r * K_t * K_g; % the numerator
+% the numerator and denominator coefficient arrays for the transfer
+% function model of the plant
+num = [0 0 (r*K_t*K_g)];
+den = [(m_c*(r^2)*R_m + R_m*(K_g^2)*J_m) (K_t*K_m*(K_g^2)) 0];
 
-s2 = J_m * K_g^2 * R_m; % the coefficient on s^2
-s = r^2 * R_m * m_c; % the coefficient on s
-den = [s2 s 0]; % the denominator
+% run the simulink model for various values of K
+for i = 1:length(K_array)
+    K = K_array(i); % pick out the value of K from the array
+    
+    % run the simulink model of the proportional controller
+    sim('p_control_cart.mdl');
+    open('p_control_cart.mdl');
+    
+    % plot the output of the simulink simulation
+    plot(simout);
+    hold on % plot on the same figure
+end
 
-plant = tf(num, den); % the plant dynamics represented as a TF
+% add a legend to differentiate the plots for different K
+legend({'K = 14', 'K = 15', 'K = 16', 'K = 17'});
 
-% find and display the poles of the the plant TF
-disp("The plant has pole(s): " + pole(plant));
-
-% run the simulink model of the proportional controller
-sim('p_control_cart.mdl');
-open('p_control_cart.mdl');
-
-% plot the output of the simulink simulation
-plot(simout);
-
+hold off
 
 
