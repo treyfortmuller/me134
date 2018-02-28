@@ -1,0 +1,2 @@
+#include <winuser.rh>
+1 RT_MANIFEST "lab4_5_3_pulse.auto.manifest"
