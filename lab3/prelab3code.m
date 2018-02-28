@@ -11,12 +11,12 @@ Kg = 3.71;
 Jm = 3.9e-7; %kg*m^2
 
 % Set Gain
-K = 15;
+K = 25.7;
 
 %% Simulink Model
 sim('prelab3.mdl');
 open('prelab3.mdl');
-plot(simout);xlabel('Time (ms)');ylabel('Response');
+plot(simout);xlabel('Time');ylabel('Response');
 title('Step Response of Cart System');
 stepinfo(simout.data,simout.time)
 
