@@ -5,9 +5,9 @@ a = 843;
 k_c = 2*k_x/a/2/k_i;
 k_a = 2;
 m = 0.0162;
-dc = 2; %DC gain of 2
-z_c = 1.5; %this is a random guess tbh
-p_c = z_c * 20; %pole to zero ratio of 20
+dc = 2; % DC gain of 2
+z_c = 1.5;
+p_c = z_c * 20; % pole to zero ratio of 20
 
 % Transfer function for plant
 s = tf('s');
@@ -19,7 +19,6 @@ rlocus(G);
 fig2 = figure(2);
 step(G)
 
- 
 % Transfer function for plant and controller
 G_c = k_c * (1 + s/z_c) / (1 + s/p_c);
 G_t = G_c * G;
