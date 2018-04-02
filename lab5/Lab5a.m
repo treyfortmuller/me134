@@ -50,7 +50,7 @@ d = [0 -1 -2 -3 -4 -5]; %mm
 d = d*0.001; %m
 % mass
 m = [0 1.8 4.6 5.7 6.5 7.3]; %%g
-% wight
+% weight
 w = m*9.81; %%N
 plot(d,w)
 xlabel('Position Deviation from Equilibrium (m)')
@@ -59,10 +59,21 @@ title('Weight of Ball as Function of \deltax')
 
 %% 5.2 5e
 % slope Kx near equilibrium position
-Kx = (w(2) - w(1)) / (d(2) - d(1)) %%N/m
+rise = w(2) - w(1)
+run = d(2) - d(1)
+
+Kx = -(rise/run) %%N/m
 
 %% 6
 DC = 1000; % A/m
 Ka = 2; %A/V
 % Kc
 Kc = DC/a/Ka
+
+%% Caluclating R1, R2, and C
+z_c = 1.5;
+p_c = 20 * z_c; % for a pole/zero ratio of 20
+
+R1 = 1e4/Kc
+R2 = z_c * R1 / (p_c - z_c)
+C = 1/(p_c*R2)
