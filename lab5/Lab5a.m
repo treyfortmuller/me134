@@ -14,7 +14,7 @@ ylabel('Output Voltage (V)');
 
 %% 5.2 3b
 % slope near equilibrium position
-a = (v(6) - v(4)) / (2) %%V/m 
+a = (v(6) - v(4)) / (2*0.001) %%V/m 
 
 % Optimal Equilibrium voltage of y
 v_eq = v(4) + a*0.001
@@ -29,7 +29,7 @@ i_from_eq = i_m - i0;
 
 % mass of ball
 m = [2.6 2 1.1 0.5 0]; %%g
-% weight of call
+% weight of ball
 w = 9.81*m*0.001;
 
 figure
@@ -42,7 +42,7 @@ title('Weight of Ball as Function of \deltaI')
 
 %% 5.2 4e
 % slope Ki near equilibrium current
-Ki = (w(4) - w(5)) / (i_from_eq(4) - i_from_eq(5)) %%N/A
+Ki = -(w(4) - w(5)) / (i_from_eq(4) - i_from_eq(5)) %%N/A
 
 %% 5.2 5d
 % delta x 
@@ -51,7 +51,7 @@ d = d*0.001; %m
 % mass
 m = [0 1.8 4.6 5.7 6.5 7.3]; %%g
 % weight
-w = m*9.81; %%N
+w = m*9.81*0.001; %%N
 plot(d,w)
 xlabel('Position Deviation from Equilibrium (m)')
 ylabel('Weight (N)')
