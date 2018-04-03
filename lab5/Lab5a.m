@@ -41,7 +41,7 @@ title('Weight of Ball as Function of \deltaI')
 
 %% 5.2 4e
 % slope Ki near equilibrium current
-Ki = (w(4) - w(5)) / (i_from_eq(4) - i_from_eq(5)) %%N/A
+Ki = -(w(4) - w(5)) / (i_from_eq(4) - i_from_eq(5)) %%N/A
 
 %% 5.2 5d
 % delta x 
