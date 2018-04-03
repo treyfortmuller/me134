@@ -64,3 +64,11 @@ DC = 1000; % A/m
 Ka = 2; %A/V
 % Kc
 Kc = DC/a/Ka
+
+%% Caluclating R1, R2, and C
+z_c = 1.5;
+p_c = 20 * z_c; % for a pole/zero ratio of 20
+
+R1 = 1e4/Kc
+R2 = z_c * R1 / (p_c - z_c)
+C = 1/(p_c*R2)
