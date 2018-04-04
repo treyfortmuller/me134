@@ -111,7 +111,7 @@ bode(tf(num1,den1))
 
 %% 4.2.1
 K_lab = [-12.9796 -14.723 -47.8456 -6.5363];
-res_p = 1/44000;
+res_p = 1/43960;
 res_a = -1/651.9;
 ref = [0;0;0;0];
 
@@ -122,7 +122,7 @@ title('Position (m) with ref = 0');
 
 figure;
 plot(tout, pos_d);
-title('Velocity (m) with ref = 0');
+title('Velocity (m/s) with ref = 0');
 
 figure;
 plot(tout, angle);
@@ -130,21 +130,21 @@ title('Angle (rad) with ref = 0');
 
 figure;
 plot(tout, angle_d);
-title('Angular Velocity (rad) with ref = 0');
+title('Angular Velocity (rad/s) with ref = 0');
 
 %% 4.2.3
 M = 0.1;
 w_array = [1 2 3];
-w = w_array(1);
+w = w_array(3);
 
 %% plotting
 figure;
 plot(tout, pos);
-title('Position (m) with ref = 0');
+title('Position (m) with ref = Msinwt');
 
 figure;
 plot(tout, pos_d);
-title('Velocity (m) with ref = 0');
+title('Velocity (m/s) with ref = 0');
 
 figure;
 plot(tout, angle);
@@ -152,4 +152,20 @@ title('Angle (rad) with ref = 0');
 
 figure;
 plot(tout, angle_d);
-title('Angular Velocity (rad) with ref = 0');
+title('Angular Velocity (rad/s) with ref = 0');
+
+%% saving arrays
+pos1 = pos;
+pos_d1 = pos_d;
+angle1 = angle;
+angle_d1 = angle_d;
+%% 
+pos2 = pos;
+pos_d2 = pos_d;
+angle2 = angle;
+angle_d2 = angle_d;
+%%
+pos3 = pos;
+pos_d3 = pos_d;
+angle3 = angle;
+angle_d3 = angle_d;
