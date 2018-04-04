@@ -155,17 +155,10 @@ plot(tout, angle_d);
 title('Angular Velocity (rad/s) with ref = 0');
 
 %% saving arrays
-pos1 = pos;
-pos_d1 = pos_d;
-angle1 = angle;
-angle_d1 = angle_d;
-%% 
-pos2 = pos;
-pos_d2 = pos_d;
-angle2 = angle;
-angle_d2 = angle_d;
+save('ref0','pos','pos_d','angle','angle_d');
 %%
-pos3 = pos;
-pos_d3 = pos_d;
-angle3 = angle;
-angle_d3 = angle_d;
+save('refw1','pos','pos_d','angle','angle_d');
+%%
+save('refw2','pos','pos_d','angle','angle_d');
+%%
+save('refw3','pos','pos_d','angle','angle_d');
