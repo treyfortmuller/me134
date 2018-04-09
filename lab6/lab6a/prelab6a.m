@@ -1,9 +1,9 @@
-%% Prelab6
+%% Prelab6a
 %% 3.2.1
 M = 0.94;
 m = 0.23;
 Lp = 0.3302;
-%Ic = m*Lp^2 * 4/3;
+
 r = 6.36*10^-3;
 Rm = 2.6;
 Kt = 7.67*10^-3;
@@ -23,38 +23,47 @@ a12 = 1;
 
 a22 = -f/d/a;
 a23 = -3/4*m*g/d;
-b2 = e/d/a;
 
 a34 = 1;
 
 a42 = f/(4/3*Lp)/d/a;
 a43 = 3/4*g/Lp + 3/4*m*g/d/(4/3*Lp);
+
+b2 = e/d/a;
 b4 = -e/(4/3*Lp)/d/a;
 
 %% 3.2.2
 A = [0 a12   0   0;
      0 a22 a23   0;
      0   0   0 a34;
-     0 a42 a43   0];
-B = [0; b2; 0; b4];
+     0 a42 a43   0]
+B = [0; b2; 0; b4]
 
 %% 3.3.1
 disp('The Eigenvalues of the system are:');
 disp(eig(A));
 
 %% 3.3.2
-Cx = [1 0 0 0];
-Ca = [0 0 1 0];
-Gx = ss(A,B,Cx,0);
-Ga = ss(A,B,Ca,0);
+Cx = [1 0 0 0]; % just position
+Ca = [0 0 1 0]; % just angle
+
+C_tot = [1 0 1 0]; % the total output
+
+Gx = ss(A, B, Cx, 0);
+Ga = ss(A, B, Ca, 0);
+G_tot = ss(A, B, C_tot, 0) % the total, linearized open loop system in ss
+
+% figure;
+% step(Gx);
+% title('Step Response for Position');
+% 
+% figure;
+% step(Ga);
+% title('Step Response for Pendulum Angle');
 
 figure;
-step(Gx);
-title('Step Response for Position');
-
-figure;
-step(Ga);
-title('Step Response for Pendulum Angle');
+step(G_tot);
+title('Step Response for Position + Pendulum Angle');
 
 %% 3.3.3
 evals_ref = [-2+10i -2-10i -1.6+1.3i -1.6-1.3i];
