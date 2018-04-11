@@ -38,12 +38,11 @@ b4 = -e/(4/3*Lp)/d/a;
 A = [0 a12   0   0;
      0 a22 a23   0;
      0   0   0 a34;
-     0 a42 a43   0
-     0 0 0 0 ];
+     0 a42 a43   0];
  
 B = [0; b2; 0; b4];
 
-C = [1 0 1 0];
+C = [1 0 0 0; 0 0 1 0];
 
 D = 0;
 
@@ -61,6 +60,21 @@ Ob = obsv(G); % the observability matrix of G
 UnOb = length(A) - rank(Ob) % the number of unobservable states
 
 %% 3.2 Observer Design
+
+% the desired poles of the observer s.t. the oberserver dynamics are faster
+% than the system dynamics by at least an order of magnitude
+p = [-10+15*1i, -10-15*1i, -12+17*1i, -12-17*1i];
+
+L = place(A',C',p)'; % the gain matrix for the observer
+
+%% 3.3 Simulation
+
+% gain matrix from lab6a
+K = [-13.1219; -14.8589; -48.6426; -6.6689];
+
+% matrices for simple formulation of the closed loop ss representation
+A_k = A - B*K;
+B_k = B*K;
 
 
 

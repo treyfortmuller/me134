@@ -47,7 +47,7 @@ disp(eig(A));
 Cx = [1 0 0 0]; % just position
 Ca = [0 0 1 0]; % just angle
 
-C_tot = [1 0 1 0]; % the total output
+C_tot = [1 0 0 0; 0 0 1 0]; % the total output
 
 Gx = ss(A, B, Cx, 0);
 Ga = ss(A, B, Ca, 0);
@@ -102,7 +102,7 @@ disp('The eigenvalues we want are:');
 disp(evals_ref');
 
 %% 3.3.4
-Bk = B*K;
+Bk = B*K
 
 [num1,den1] = ss2tf(Ak,Bk,Cx,zeros(1,4),1)
 figure;
