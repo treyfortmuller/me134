@@ -72,19 +72,30 @@ L = place(A',C',p)'; % the gain matrix for the observer
 % gain matrix from lab6a
 K = [-13.1219; -14.8589; -48.6426; -6.6689];
 
-% matrices for simple formulation of the closed loop ss representation
-A_k = A - B*K;
-B_k = B*K;
-
-
-
-
-
-
-
-
-
-
+% % matrices for simple formulation of the closed loop ss representation
+% A_k = A - B*K';
+% B_k = B*K';
+% 
+% ref = 0; % the reference position of the cart
+% 
+% sim('observer.slx'); % run the Simulink simulation of the observer system
+% 
+% % plots for 3.3.2
+% figure;
+% subplot(4, 1, 1);
+% plot(x(1), t);
+% subplot(4, 1, 1);
+% plot(x(2), t);
+% subplot(4, 1, 1);
+% plot(x(3), t);
+% subplot(4, 1, 1);
+% plot(x(4), t);
+% 
+% % plots for 3.3.3
+% figure;
+% plot(x_h - x, t);
+% 
+% 
 
 
 

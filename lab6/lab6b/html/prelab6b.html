@@ -1,0 +1,273 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Prelab6b</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-04-11"><meta name="DC.source" content="prelab6b.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Prelab6b</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">setup for the open loop, linearized state space model</a></li><li><a href="#2">3.1 Controllability &amp; Observability</a></li><li><a href="#3">3.2 Observer Design</a></li><li><a href="#4">3.3 Simulation</a></li></ul></div><h2 id="1">setup for the open loop, linearized state space model</h2><p>system constants</p><pre class="codeinput">M = 0.94;
+m = 0.23;
+Lp = 0.3302;
+
+r = 6.36*10^-3;
+Rm = 2.6;
+Kt = 7.67*10^-3;
+Km = 7.67*10^-3;
+Kg = 3.71;
+Jm = 3.9*10^-7;
+g = 9.81;
+
+a = M*r^2*Rm + Kg^2*Jm*Rm;
+b = Kg^2*Kt*Km;
+c = Kg*Kt*r;
+d = M + m/4;
+e = M*c;
+f = M*b;
+
+<span class="comment">% A matrix elements</span>
+a12 = 1;
+a22 = -f/d/a;
+a23 = -3/4*m*g/d;
+a34 = 1;
+a42 = f/(4/3*Lp)/d/a;
+a43 = 3/4*g/Lp + 3/4*m*g/d/(4/3*Lp);
+
+<span class="comment">% B matrix elements</span>
+b2 = e/d/a;
+b4 = -e/(4/3*Lp)/d/a;
+
+<span class="comment">% constructing the matrices for the open loop, linearized state space sys</span>
+<span class="comment">% the state vector is [x x_dot theta theta_dot]</span>
+A = [0 a12   0   0;
+     0 a22 a23   0;
+     0   0   0 a34;
+     0 a42 a43   0];
+
+B = [0; b2; 0; b4];
+
+C = [1 0 0 0; 0 0 1 0];
+
+D = 0;
+
+<span class="comment">% the open loop, linearized state space model of the inverted pendulum</span>
+G = ss(A, B, C, D);
+</pre><h2 id="2">3.1 Controllability &amp; Observability</h2><pre class="codeinput"><span class="comment">% determining controllability</span>
+Co = ctrb(G); <span class="comment">% the controllability matrix of G</span>
+UnCo = length(A) - rank(Co) <span class="comment">% the number of uncontrollable states</span>
+
+<span class="comment">% determining observability</span>
+Ob = obsv(G); <span class="comment">% the observability matrix of G</span>
+UnOb = length(A) - rank(Ob) <span class="comment">% the number of unobservable states</span>
+</pre><pre class="codeoutput">
+UnCo =
+
+     0
+
+
+UnOb =
+
+     0
+
+</pre><h2 id="3">3.2 Observer Design</h2><pre class="codeinput"><span class="comment">% the desired poles of the observer s.t. the oberserver dynamics are faster</span>
+<span class="comment">% than the system dynamics by at least an order of magnitude</span>
+p = [-10+15*1i, -10-15*1i, -12+17*1i, -12-17*1i];
+
+L = place(A',C',p)'; <span class="comment">% the gain matrix for the observer</span>
+</pre><h2 id="4">3.3 Simulation</h2><pre class="codeinput"><span class="comment">% gain matrix from lab6a</span>
+K = [-13.1219; -14.8589; -48.6426; -6.6689];
+
+<span class="comment">% matrices for simple formulation of the closed loop ss representation</span>
+A_k = A - B*K';
+B_k = B*K';
+
+ref = 0; <span class="comment">% the reference position of the cart</span>
+
+sim(<span class="string">'observer.slx'</span>); <span class="comment">% run the Simulink simulation of the observer system</span>
+
+<span class="comment">% plots for 3.3.2</span>
+figure;
+subplot(4, 1, 1);
+plot(x(1), t);
+subplot(4, 1, 1);
+plot(x(2), t);
+subplot(4, 1, 1);
+plot(x(3), t);
+subplot(4, 1, 1);
+plot(x(4), t);
+
+<span class="comment">% plots for 3.3.3</span>
+figure;
+plot(x_h - x, t);
+</pre><pre class="codeoutput error">Error using prelab6b (line 81)
+Error due to multiple causes.
+
+Caused by:
+    Error using prelab6b (line 81)
+    Matrix multiply dimensions propagation error. Error occurred while setting input port 1 of '&lt;a href="matlab:open_and_hilite_hyperlink ('observer/Product1','error')"&gt;observer/Product1&lt;/a&gt;' to have the dimensions [4 x 4]. A possible cause for this error is that these dimensions do not agree with the partial dimensions information present on other ports    Error using prelab6b (line 81)
+    Error in port widths or dimensions. Output port 1 of '&lt;a href="matlab:open_and_hilite_hyperlink ('observer/Constant2','error')"&gt;observer/Constant2&lt;/a&gt;' is a [4x4] matrix</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Prelab6b
+
+%% setup for the open loop, linearized state space model
+% system constants
+M = 0.94;
+m = 0.23;
+Lp = 0.3302;
+
+r = 6.36*10^-3;
+Rm = 2.6;
+Kt = 7.67*10^-3;
+Km = 7.67*10^-3;
+Kg = 3.71;
+Jm = 3.9*10^-7;
+g = 9.81;
+
+a = M*r^2*Rm + Kg^2*Jm*Rm;
+b = Kg^2*Kt*Km;
+c = Kg*Kt*r;
+d = M + m/4;
+e = M*c;
+f = M*b;
+
+% A matrix elements
+a12 = 1;
+a22 = -f/d/a;
+a23 = -3/4*m*g/d;
+a34 = 1;
+a42 = f/(4/3*Lp)/d/a;
+a43 = 3/4*g/Lp + 3/4*m*g/d/(4/3*Lp);
+
+% B matrix elements
+b2 = e/d/a;
+b4 = -e/(4/3*Lp)/d/a;
+
+% constructing the matrices for the open loop, linearized state space sys
+% the state vector is [x x_dot theta theta_dot]
+A = [0 a12   0   0;
+     0 a22 a23   0;
+     0   0   0 a34;
+     0 a42 a43   0];
+ 
+B = [0; b2; 0; b4];
+
+C = [1 0 0 0; 0 0 1 0];
+
+D = 0;
+
+% the open loop, linearized state space model of the inverted pendulum
+G = ss(A, B, C, D);
+
+%% 3.1 Controllability & Observability
+
+% determining controllability
+Co = ctrb(G); % the controllability matrix of G
+UnCo = length(A) - rank(Co) % the number of uncontrollable states
+
+% determining observability
+Ob = obsv(G); % the observability matrix of G
+UnOb = length(A) - rank(Ob) % the number of unobservable states
+
+%% 3.2 Observer Design
+
+% the desired poles of the observer s.t. the oberserver dynamics are faster
+% than the system dynamics by at least an order of magnitude
+p = [-10+15*1i, -10-15*1i, -12+17*1i, -12-17*1i];
+
+L = place(A',C',p)'; % the gain matrix for the observer
+
+%% 3.3 Simulation
+
+% gain matrix from lab6a
+K = [-13.1219; -14.8589; -48.6426; -6.6689];
+
+% matrices for simple formulation of the closed loop ss representation
+A_k = A - B*K';
+B_k = B*K';
+
+ref = 0; % the reference position of the cart
+
+sim('observer.slx'); % run the Simulink simulation of the observer system
+
+% plots for 3.3.2
+figure;
+subplot(4, 1, 1);
+plot(x(1), t);
+subplot(4, 1, 1);
+plot(x(2), t);
+subplot(4, 1, 1);
+plot(x(3), t);
+subplot(4, 1, 1);
+plot(x(4), t);
+
+% plots for 3.3.3
+figure;
+plot(x_h - x, t);
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
