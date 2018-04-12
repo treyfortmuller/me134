@@ -1,11 +1,7 @@
-%% Prelab6b
-
-%% setup for the open loop, linearized state space model
-% system constants
+%%Prelab6b
 M = 0.94;
 m = 0.23;
 Lp = 0.3302;
-
 r = 6.36*10^-3;
 Rm = 2.6;
 Kt = 7.67*10^-3;
@@ -21,81 +17,120 @@ d = M + m/4;
 e = M*c;
 f = M*b;
 
-% A matrix elements
 a12 = 1;
+
 a22 = -f/d/a;
 a23 = -3/4*m*g/d;
+b2 = e/d/a;
+
 a34 = 1;
+
 a42 = f/(4/3*Lp)/d/a;
 a43 = 3/4*g/Lp + 3/4*m*g/d/(4/3*Lp);
-
-% B matrix elements
-b2 = e/d/a;
 b4 = -e/(4/3*Lp)/d/a;
 
-% constructing the matrices for the open loop, linearized state space sys
-% the state vector is [x x_dot theta theta_dot]
+%%
 A = [0 a12   0   0;
      0 a22 a23   0;
      0   0   0 a34;
      0 a42 a43   0];
- 
 B = [0; b2; 0; b4];
 
-C = [1 0 0 0; 0 0 1 0];
+%%
+evals_ref = [-2+10i -2-10i -1.6+1.3i -1.6-1.3i];
+poly_ref = [1 7.2 121.05 349.8 442];
 
-D = 0;
+syms s k1 k2 k3 k4
+K = [k1 k2 k3 k4];
+det(s*eye(4)- (A-B*K));
 
-% the open loop, linearized state space model of the inverted pendulum
-G = ss(A, B, C, D);
+alpha = [0 (1702048330515329)/1125899906842624 0 -(3865948661073583)/1125899906842624;
+         (1702048330515329)/1125899906842624 0 -(3865948661073583)/1125899906842624 -(902507433127031)/1267650600228229401496703205376;
+         0 -(5070589949573361625951928816354967)/150533508777102241427733505638400 -(902507433127031)/1267650600228229401496703205376 0;
+         -(5070589949573361625951928816354967)/150533508777102241427733505638400 0 0 0];
+     
+beta = [7.2 - (7615247905447333)/1125899906842624;
+        121.05 + (7356410423830389)/281474976710656;
+        349.8 + (8358244827842790063191863187794119)/55459713759985036315480765235200;
+        442];
 
-%% 3.1 Controllability & Observability
+K = alpha\beta;
+K = K';
+k1 = K(1);
+k2 = K(2);
+k3 = K(3);
+k4 = K(4);
 
-% determining controllability
-Co = ctrb(G); % the controllability matrix of G
-UnCo = length(A) - rank(Co) % the number of uncontrollable states
+Ak = A-B*K;
+Bk = B*K;
+C = [1 0 0 0;
+     0 0 1 0];
+%%
+K_lab = [-12.9796 -14.723 -47.8456 -6.5363];
 
-% determining observability
-Ob = obsv(G); % the observability matrix of G
-UnOb = length(A) - rank(Ob) % the number of unobservable states
+%% 3.1
+CO = ctrb(A,B);
+OB = obsv(A,C);
+rank(CO)
+rank(OB)
+% rank = 4 means controllable and observable
 
-%% 3.2 Observer Design
+%% 3.2.1
+% dimension of L should be : LC = 4x4, C = 2x4, -> L = 4x2;
 
-% the desired poles of the observer s.t. the oberserver dynamics are faster
-% than the system dynamics by at least an order of magnitude
-p = [-10+15*1i, -10-15*1i, -12+17*1i, -12-17*1i];
+%% 3.2.2
+P = [-10+15j -10-15j -12+17j -12-17j];
+% eig of (A-LC) = eig of (A' - C'*L')
+l = place(A',C',P);
+L = l'
+Cl = L*C;
 
-L = place(A',C',p)'; % the gain matrix for the observer
+%% 3.3.1
+% x_hd = Ax_h + BK(r-x_h)+ LC(x-x_h);
+% x_d = Akx + Bkr
+ref = [0 0 0 0];
+ic = [0.1 0 5*pi/180 0];
 
-%% 3.3 Simulation
+%% 3.3.2
+sim('pl6b')
 
-% gain matrix from lab6a
-K = [-13.1219; -14.8589; -48.6426; -6.6689];
+figure;
+plot(t,x(:,1),t,x_h(:,1),'-.');
+legend('x','x_h');
+title('position (m)');
 
-% % matrices for simple formulation of the closed loop ss representation
-% A_k = A - B*K';
-% B_k = B*K';
-% 
-% ref = 0; % the reference position of the cart
-% 
-% sim('observer.slx'); % run the Simulink simulation of the observer system
-% 
-% % plots for 3.3.2
-% figure;
-% subplot(4, 1, 1);
-% plot(x(1), t);
-% subplot(4, 1, 1);
-% plot(x(2), t);
-% subplot(4, 1, 1);
-% plot(x(3), t);
-% subplot(4, 1, 1);
-% plot(x(4), t);
-% 
-% % plots for 3.3.3
-% figure;
-% plot(x_h - x, t);
-% 
-% 
+figure;
+plot(t,x(:,2),t,x_h(:,2),'-.');
+legend('x','x_h');
+title('velocity (m/s)');
 
+figure;
+plot(t,x(:,3),t,x_h(:,3),'-.');
+legend('x','x_h');
+title('angle (rad)');
 
+figure;
+plot(t,x(:,4),t,x_h(:,4),'-.');
+legend('x','x_h');
+title('angular velocity (rad/s) ');
 
+%% 3.3.3
+e = x_h - x;
+
+figure;
+plot(t,e(:,1));
+title('position error (m)');
+
+figure;
+plot(t,e(:,2));
+title('velocity error (m/s)');
+
+figure;
+plot(t,e(:,3));
+title('angle error (rad)');
+
+figure;
+plot(t,e(:,4));
+title('angular velocity error (rad/s)');
+
+%as time increases error decreases
